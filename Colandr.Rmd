@@ -1,0 +1,121 @@
+---
+title: "Colandr"
+author:
+  - name: "Lolita Muller"
+    email: "m.lolita@cgiar.org"
+    orcid: "0009-0002-8345-7219"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    self_contained: true
+---
+# Overview
+
+**Colandr** is a free, web-based platform that supports **systematic reviews**, from citation import through to full-text screening and data extraction. It’s designed to be collaborative and user-friendly, making it a great tool for teams working across locations.
+
+Website: [https://www.colandrcommunity.com](https://www.colandrcommunity.com)
+
+---
+
+# Key Features
+
+- Web-based, no installation required
+- Supports title/abstract screening and full-text review
+- Allows for data extraction from included studies
+- Designed for **collaborative workflows**
+- Open-source and actively maintained
+
+---
+
+# When to Use Colandr
+
+Colandr is best suited for full review workflows where you want a simple, all-in-one platform. It works especially well if:
+
+- You’re working with a **team of reviewers**
+- You need to **track progress** and manage tasks
+- You want to keep everything (screening + extraction) in one place
+
+---
+
+# How to Use Colandr
+
+## 1. Create an Account
+
+Visit [https://www.colandrcommunity.com](https://www.colandrcommunity.com) and sign up for a free account.
+
+## 2. Create a New Review
+
+Set up your project with:
+
+- Title and description
+- Research question or topic
+- Key review settings
+
+## 3. Define Review Protocol
+
+Under the **“Planning”** tab, outline your:
+
+- Inclusion/exclusion criteria
+- Keywords and search strategies
+- Review objectives
+
+## 4. Upload References
+
+Supported formats:
+
+- `.RIS` or `.CSV` (from databases like PubMed, Scopus, etc.)
+
+You can upload multiple batches of references.
+
+## 5. Title and Abstract Screening
+
+Each reviewer marks references as `Include` or `Exclude`.
+
+- Optional: set **screening thresholds** (e.g., include if 2 of 3 reviewers agree)
+- Progress is tracked per reviewer
+
+## 6. Full-Text Screening
+
+Upload and screen full-text PDFs, with options to:
+
+- Add notes or tags
+- Include/exclude with rationale
+
+## 7. Data Extraction
+
+Use customizable fields to extract:
+
+- Study design
+- Sample size
+- Outcomes
+- Other relevant variables
+
+All extracted data can be exported for analysis.
+
+---
+
+# Exporting Results
+
+You can export:
+
+- Screening decisions
+- Extracted data
+- Full dataset of included studies
+
+Formats: `.CSV` (for meta-analysis or reporting)
+
+---
+
+# Strengths & Limitations
+
+| Strengths                      | Limitations                         |
+|-------------------------------|-------------------------------------|
+| All-in-one workflow           | Slightly slower on large datasets   |
+| Supports data extraction      | No predictive/prioritization model  |
+| Team-based collaboration      | No API or command-line use          |
+| Easy to learn and use         | Occasionally buggy on PDF uploads   |
+
+---
