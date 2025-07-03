@@ -25,7 +25,7 @@ We don’t build new tools here—we show how to **use** and **combine** existin
 
 Each tool has its own page :
 
-- **🔗 Open Alex vignette**: [View Report](https://Evidence-Syntehsis.github.io/tools/docs/Open_Alex.html)
+- **🔗 Open Alex vignette**: [View Report](https://Evidence-Synthesis.github.io/tools/docs/Open_Alex.html)
 
 
 You can explore and contribute directly through those pages. New content appears after each update to this repository.
