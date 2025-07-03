@@ -1,0 +1,125 @@
+---
+title: "Comparing Screening Methods"
+author:
+  - name: "Lolita Muller"
+    email: "m.lolita@cgiar.org"
+    orcid: "0009-0002-8345-7219"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    self_contained: true
+---
+
+# Overview
+
+This document compares three tools commonly used for screening and classifying papers in evidence synthesis workflows:
+
+- **Colandr** – an open-source tool for systematic reviews including planning, screening, and extraction.
+- **Abstrackr** – a semi-automated tool for abstract screening with machine learning.
+- **GPT-based tagging** – a script-based approach using AI (e.g., OpenAI's GPT) to assign topics or filters to papers.
+
+Each tool supports different stages of the evidence synthesis process. We explore when to use each, their strengths and limitations, and how they can complement one another.
+
+---
+
+# Tool Comparison Table
+
+| Feature                      | **Colandr**                      | **Abstrackr**                   | **GPT Tagging**                    |
+|-----------------------------|----------------------------------|----------------------------------|------------------------------------|
+| Platform                    | Web-based                        | Web-based                        | Script-based (R or Python)         |
+| Abstract screening          | ✅ Yes                           | ✅ Yes (ML-assisted)             | ❌ No (used post-screening)         |
+| Prioritization              | ❌ No                            | ✅ Yes                           | ❌ (Manual filtering needed)        |
+| Full-text screening         | ✅ Yes                           | ❌ No                            | ❌ No                              |
+| Data extraction             | ✅ Yes                           | ❌ No                            | ⚠️ Prompt-based (manual tuning)     |
+| Machine learning            | ❌ No                            | ✅ Yes                           | ✅ Yes (pre-trained)                |
+| Collaboration support       | ✅ Yes                           | ✅ Limited                       | ❌ No                              |
+| Export options              | CSV                              | CSV                              | Custom (via script)                |
+| Cost                        | ✅ Free                          | ✅ Free                          | ⚠️ Token-based (OpenAI or local GPU) |
+| Ideal use case              | Full review lifecycle            | Efficient abstract screening     | Fast tagging post-prioritization   |
+
+---
+
+# Tool Descriptions
+
+## 🟦 Colandr
+
+Colandr is a structured and collaborative tool covering the full systematic review process: from planning and protocol development to full-text screening and data extraction.
+
+**Pros:**
+- Centralizes review protocol, criteria, and inclusion logic
+- Ideal for teamwork and coordination
+- Handles full-text screening and data collection
+
+**Cons:**
+- No ML-assisted prioritization
+- Limited filtering functions for large datasets
+- Some usability bugs reported in large reviews
+
+## 🟨 Abstrackr
+
+Abstrackr is focused on the **screening phase** of a review. It uses machine learning to learn from user decisions and sort abstracts based on relevance.
+
+**Pros:**
+- Speeds up large reviews by moving likely relevant studies to the top
+- Very simple interface
+- No installation required
+
+**Cons:**
+- Doesn’t handle full-text or data extraction
+- Requires clean import formats (e.g. RIS)
+- Limited export structure for downstream use
+
+## 🟧 GPT Tagging
+
+GPT-based tagging uses a large language model (LLM) to automatically assign themes, tags, or labels to abstracts. This is useful for classifying papers across **multiple categories** once irrelevant ones have been filtered out.
+
+
+**Pros:**
+- Fast, accurate, and adaptable to new tag sets
+- Ideal for thematic mapping, scoping reviews, or evidence gap mapping
+- Can be effective at **filtering on metadata-like criteria** (e.g., geography or country mentions)
+
+**Cons:**
+- Cost can scale with the number of abstracts (token-based)
+- Should not be used on unfiltered data to avoid waste
+- Requires some scripting (R/Python)
+
+---
+
+# When to Use GPT Carefully
+
+While GPT is powerful, it **should not replace screening**. Running GPT across all search results (thousands of records) would be costly and could propagate false positives.
+
+That said, GPT can be **very effective at excluding a substantial portion of irrelevant papers** when your filtering criteria are simple and metadata-like — for example, geographic focus.
+
+> If your criterion is "studies conducted in Africa," GPT can quickly identify papers that mention countries outside of Africa, allowing you to exclude a large number of irrelevant abstracts. This is especially useful after an initial ML screening phase has reduced the pool.
+
+Use GPT:
+- After deduplication and screening have removed obvious irrelevant records
+- When you need to filter or tag based on geographic or topical filters (e.g., country, crop, method)
+- For scoping reviews or mapping projects where quick categorization is useful
+
+Always weigh the **cost vs benefit** of large-scale GPT use — especially with token-based pricing.
+
+---
+
+# Final Thoughts
+
+No tool is perfect on its own. Here's how they best complement one another:
+
+- **Abstrackr**: reduces the volume of manual screening
+- **GPT**: adds speed and consistency to tagging, especially for high-impact filters like region or intervention
+- **Colandr**: ensures quality, reproducibility, and team integration
+
+
+---
+
+# Contacts
+
+For example scripts and workflows, contact:
+
+**Lolita Muller** – [m.lolita@cgiar.org](mailto:m.lolita@cgiar.org)  
+GitHub: [Evidence-Synthesis-Hub](https://github.com/Evidence-Synthesis-Hub)
