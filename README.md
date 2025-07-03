@@ -23,16 +23,12 @@ We don’t build new tools here—we show how to **use** and **combine** existin
 
 ## GitHub Pages
 
-All documentation is published at: **[https://evidence-hub.org](https://evidence-hub.org)**
+Each tool has its own page :
 
-Each tool has its own page, including:
+- **🔗 Open Alex vignette**: [View Report](https://Evidence-Syntehsis.github.io/tools/docs/OA-vignette.html)
 
-* What it does
-* When to use it
-* Pros & cons
-* How to integrate with others
 
-You can explore and contribute directly through that website. New content appears after each update to this repository.
+You can explore and contribute directly through those pages. New content appears after each update to this repository.
 
 ---
 
