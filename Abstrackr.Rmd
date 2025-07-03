@@ -1,0 +1,110 @@
+---
+title: "Using Abstrackr for Screening"
+author:
+  - name: "Lolita Muller"
+    email: "m.lolita@cgiar.org"
+    orcid: "0009-0002-8345-7219"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    self_contained: true
+---
+
+# Overview
+
+**Abstrackr** is a free, web-based tool designed to streamline the **title and abstract screening phase** of systematic reviews. It uses machine learning to predict which references are most likely to be relevant as you screen.
+
+Abstrackr is especially useful when working with **large citation datasets**, allowing reviewers to focus effort where it matters most.
+
+Website: [https://abstrackr.cebm.brown.edu](https://abstrackr.cebm.brown.edu)
+
+---
+
+# Key Features
+
+- Semi-automated abstract screening
+- Learns from your inclusion/exclusion decisions
+- Can prioritize articles for manual review
+- Supports collaborative screening
+- Works best with datasets of 200+ citations
+
+---
+
+# When to Use Abstrackr
+
+Use Abstrackr when:
+
+- You need to screen **hundreds or thousands of references**
+- You want to **speed up** the process while retaining control
+- You have **multiple reviewers**
+- You want to prioritize screening for likely-includes
+
+It is **not** used for full-text review or post-inclusion data extraction.
+
+---
+
+# How to Use Abstrackr
+
+## 1. Create an Account
+
+Go to [https://abstrackr.cebm.brown.edu](https://abstrackr.cebm.brown.edu) and sign up for a free account.
+
+## 2. Create a New Project
+
+- Name your review project
+- Choose single or dual-screening mode
+- Optionally, invite collaborators
+
+## 3. Upload Citations
+
+Supported formats include:
+
+- `.RIS`
+- `.TXT` (tagged citations)
+- `.XML` (e.g., from EndNote or PubMed)
+
+## 4. Begin Screening
+
+- Mark each abstract as `Include`, `Exclude`, or `Unsure`
+- You may also add reasons for exclusion if desired
+
+## 5. Machine Learning in Action
+
+- Abstrackr observes your screening decisions
+- It updates its predictions after ~50–100 abstracts
+- The more you screen, the more accurate the model becomes
+
+## 6. Prioritize Screening
+
+Once predictions are available, you can:
+
+- Focus on high-likelihood `Includes`
+- Stop early (if using active learning strategies)
+- Export the final screened dataset
+
+---
+
+# Export Options
+
+When finished, export your decisions as a `.CSV` file for:
+
+- Documentation in PRISMA diagrams
+- Loading into full-text screening tools (e.g., Covidence, CADIMA)
+- Integration with other tools in your review pipeline
+
+---
+
+# Strengths & Limitations
+
+| Strengths                     | Limitations                      |
+|------------------------------|----------------------------------|
+| Free and easy to use         | Web-only; no API or offline use  |
+| Speeds up large screenings   | Occasional bugs or downtime      |
+| Learns from your inputs      | Predictions may vary by topic    |
+| Prioritizes likely includes  | Export format can be tricky      |
+
+---
+
