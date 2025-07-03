@@ -25,7 +25,13 @@ We don’t build new tools here—we show how to **use** and **combine** existin
 
 Each tool has its own page :
 
+*Keyword Search and References*
+
 - **🔗 Open Alex vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Open_Alex.html)
+
+*Screening*
+
+- **🔗 GPT Tagging vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/GPT-Screening.html)
 
 
 You can explore and contribute directly through those pages. New content appears after each update to this repository.
