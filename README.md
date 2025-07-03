@@ -28,7 +28,8 @@ Each tool has its own page :
 *Keyword Search and References*
 
 - **🔗 Open Alex vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Open_Alex.html)
-- listsearchr
+- **🔗 litsearchr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/litsearchr.html)
+
 
 *Screening*
 
