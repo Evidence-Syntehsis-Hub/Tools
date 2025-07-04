@@ -33,13 +33,12 @@ Each tool has its own page :
 
 *Screening*
 
-- **🔗 GPT Tagging vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/GPT-Screening.html)
 - **🔗 Abstrackr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Abstrackr.html)
 - **🔗 Colandr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Colandr.html)
-- **🔗 Comparing Screening Methods**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Comparing-Screening-Methods.html)
 
+*Tagging*
 
-
+- **🔗 GPT Tagging vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/GPT-Screening.html)
 
 You can explore and contribute directly through those pages. New content appears after each update to this repository.
 
