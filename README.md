@@ -46,30 +46,24 @@ You can explore and contribute directly through those pages. New content appears
 
 ---
 
-## How to use this repo
+## How to use this repo (R workflow)
 
-You can:
+You can …
 
-* Browse or run examples with real data
-* Copy templates to start your own project
-* Benchmark and compare tools side by side
-* Learn through training materials and exercises
+- Explore the worked examples with real datasets  
+- Copy the R Markdown / Quarto templates to start your own review  
+- Benchmark different screening tools side by side  
+- Learn via the included training exercises  
 
-To get started:
+---
+
+### Quick start
 
 ```bash
-# clone the repo
+# clone the repository
 git clone https://github.com/<org-or-username>/evidence-synthesis-hub.git
 cd evidence-synthesis-hub
-
-# set up the environment
-conda env create -f env.yml
-conda activate evidence-hub
-
-# optional: preview the documentation site locally
-mkdocs serve
 ```
-
 ---
 
 ## Contributing
@@ -88,7 +82,7 @@ Please check [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to get started.
 ## Contact
 
 * **Project leads:** Lolita, Todd, Natalia, Andrea, Sarah
-* **Institutions:** WorldFish & CIRAD
+* **Institutions:** Allaince for Bioversity, WorldFish & CIRAD
 * **Email:** `m.lolita@cgiar.org`
 
 ---
