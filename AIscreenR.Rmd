@@ -1,0 +1,278 @@
+---
+title: "AIscreenR"
+author:
+  - name: "Lolita Muller"
+    email: "m.lolita@cgiar.org"
+    orcid: "0009-0002-8345-7219"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    self_contained: true
+---
+
+# Introduction
+
+Systematic reviews live or die by their **title-and-abstract screening** stage—but pushing hundreds (or thousands) of records through two independent human reviewers is slow, costly, and error-prone. **`AIscreenR`** brings large-language-model assistance straight into R so you can treat GPT models as a second screener, a triage filter, or even the primary screener for low-risk projects. The package wraps the OpenAI API in reproducible, pipeline-friendly functions and adds built-in diagnostics so you can measure model performance.
+
+| Docs & Source | Links |
+|---------------|-------|
+| CRAN page & PDF manual | <https://cran.r-project.org/package=AIscreenR> |
+| GitHub repository | <https://github.com/open-meta/AIscreenR> |
+| OpenAI API-key dashboard | <https://platform.openai.com/account/api-keys> |
+
+---
+
+## What this walk-through covers
+
+1. **Install and configure `AIscreenR`**  
+   *One-liner helper:* `set_api_key()` keeps your OpenAI key out of your script and console history.
+
+2. **Assemble a screening dataset**  
+   Merge multiple *.bib* / *.ris* files, tag known inclusions, and build a tidy `training_data` tibble.
+
+3. **Estimate cost**  
+   Use `approximate_price_gpt()` to see the token budget **before** you hit “go.”
+
+4. **Run the screening**  
+   Call `tabscreen_gpt()`—optionally in parallel with `future::plan(multisession)` to stay inside your rate limits.
+
+5. **Evaluate decisions**  
+   Produce a confusion-matrix summary (true positives/negatives, false positives/negatives) to gauge accuracy.
+
+---
+
+## Outcome
+
+By the end you’ll have a reproducible, one-click pipeline that
+
+* pulls your bibliographic records,  
+* lets GPT flag which papers meet your inclusion criteria, and  
+* tells you—in plain numbers—how many studies the model missed or kept by mistake.
+
+Feel free to adapt the prompt, swap in another model (e.g. `gpt-4o-mini` vs `gpt-4o`), or expand the evaluation to precision/recall as your review demands.
+
+
+## Install package
+
+```{r}
+#install.packages("AIscreenR")
+```
+
+```{r,message=FALSE,warning=FALSE}
+# Find your api key at https://platform.openai.com/account/api-keys 
+# Thereafter, either encrypt it with the secret functions from the httr2 package
+# see https://httr2.r-lib.org/reference/secrets.html or run set_api_key() 
+# and then enter you key.
+library(AIscreenR)
+library(synthesisr)
+library(tibble)
+library(dplyr)
+library(future)
+
+# Setting API
+#set_api_key() use this or set the API key in R.environ to do it only once
+
+set_api_key(Sys.getenv("OPENAI_API_KEY"))
+
+
+# Obtain rate limits info (Default is "gpt-4o-mini")
+rate_limits <- rate_limits_per_minute()
+rate_limits
+
+```
+
+## Upload references
+```{r}
+library(synthesisr)
+library(dplyr)
+library(tibble)
+
+# ─────────────────────────────────────────────────────────────
+# 1.  Source files
+# ─────────────────────────────────────────────────────────────
+all_refs <- bind_rows(
+  read_refs("savedrecs.bib"),#america productivity
+  read_refs("savedrecs (1).bib"), #america productivity
+  read_refs("savedrecs4.bib") #america resilience
+
+) |>
+  select(title, abstract) |>
+  distinct(title, .keep_all = TRUE)     # drop perfect duplicates
+
+
+included_refs <- read_refs("5. Extracted.ris") |>
+  select(title, abstract) |>
+  mutate(human_code = 1)                          # already screened in
+
+extra_included <- read_refs("2. ALREADY IN ERA.ris") |>
+  select(title, abstract) |>
+  mutate(human_code = 1)                          # “already-in-database” papers
+
+# 2.  Merge & de-duplicate the two ‘included’ sets
+included_refs_all <- bind_rows(included_refs, extra_included) |>
+  distinct(title, .keep_all = TRUE)               # keep one copy per title
+
+# 3.  Everything else becomes provisionally excluded
+
+excluded_refs <- anti_join(all_refs, included_refs_all, by = "title") |>
+  mutate(human_code = 0)
+
+# ─────────────────────────────────────────────────────────────
+# 4.  Final training table
+# ─────────────────────────────────────────────────────────────
+training_data <- bind_rows(included_refs_all, excluded_refs) |>
+  filter(!is.na(abstract) & abstract != "") |>
+  mutate(
+    studyid  = row_number(),          # unique numeric ID
+    title    = as.character(title),
+    abstract = as.character(abstract)
+  ) |>
+  arrange(title)                       # alphabetical A–Z
+
+
+```
+
+## Design your prompt
+```{r}
+prompt <-"You are helping screen studies for a systematic review on the impact of on-farm agricultural practices on resilience, productivity, and mitigation outcomes.
+
+Please read the following study title and abstract, and decide whether it meets **all** of the inclusion criteria. If unsure always rather include than exclude. The criteria are:
+
+
+1. The study must report **experimental field research** (no lab or greenhouse trials).
+2. The study must evaluate an **agricultural practice**, including but not limited to:
+   - agroforestry, crop rotation, intercropping, green manure, crop residue management, mulch, water harvesting, organic fertilizer, biological pest control, selective pesticides, inorganic fertilizer optimization, improved varieties, heirloom/local varieties, reduced tillage, or supplemental irrigation.
+3. The study must include **a comparison between a treatment and a control** (i.e., an intervention vs. a baseline or alternative).
+4. The study must report on at least one measurable **outcome**, such as:
+   - productivity, economic impact, soil health, resource efficiency, gender outcomes, labor, biodiversity, or greenhouse gas emissions.
+5. Exclude studies that are:
+   - modeling or simulation-based, meta-analyses, reviews, or not related to agriculture."
+
+```
+
+
+## Estimate screening cost
+```{r}
+
+training_data <- training_data |>
+  filter(
+    !is.na(studyid), studyid != "",
+    !is.na(abstract), abstract != ""
+  ) |>
+  mutate(
+    studyid  = as.character(studyid),
+    abstract = as.character(abstract)
+  ) |>
+  arrange(title)                    # alphabetical A-Z on the title
+
+
+
+app_obj <- approximate_price_gpt(
+  data     = training_data,
+  prompt   = prompt,
+  studyid  = studyid,      # you now have a true ID column
+  title    = title,
+  abstract = abstract,
+  model    = "gpt-4o-mini",
+  reps     = 1
+)
+
+
+app_obj
+
+app_obj$price_dollar
+
+app_obj$price_data
+
+```
+
+## Perform screening
+```{r}
+# Subsetting the number of references to speed up the tutorial screening
+plan(multisession)
+
+test_obj <- tabscreen_gpt(
+  data     = training_data,
+  prompt   = prompt,
+  studyid  = studyid,      # column *names* in training_data
+  title    = title,
+  abstract = abstract,
+  model    = "gpt-4o-mini",
+  reps     = 1
+)
+
+
+plan(sequential)
+test_obj
+
+
+# Data sets in object
+price_dat <- test_obj$price_data
+price_dat
+
+
+all_dat <- test_obj$answer_data
+all_dat |> select(human_code, decision_binary)
+
+```
+
+
+## Assess accuracy of screening
+```{r}
+library(dplyr)
+library(tidyr)
+library(scales)
+
+conf_long <- all_dat %>%
+  mutate(
+    outcome = case_when(
+      human_code == 1 & decision_binary == 1 ~ "TP",   # correctly INCLUDED
+      human_code == 1 & decision_binary == 0 ~ "FN",   # should IN, model OUT
+      human_code == 0 & decision_binary == 1 ~ "FP",   # should OUT, model IN
+      human_code == 0 & decision_binary == 0 ~ "TN"    # correctly EXCLUDED
+    )
+  )
+
+counts <- conf_long %>% count(outcome) %>% 
+  pivot_wider(names_from = outcome, values_from = n, values_fill = 0) %>% 
+  mutate(across(c(TP, TN, FP, FN), ~ .x %||% 0))
+
+tot <- nrow(all_dat)
+
+summary_tbl <- tibble(
+  Metric        = c(
+    "True includes (TP)",
+    "True excludes (TN)",
+    "False negatives (FN)",
+    "False positives (FP)",
+    "Total screened",
+    "Overall accuracy"
+  ),
+  Count         = c(counts$TP, counts$TN, counts$FN, counts$FP, tot, NA),
+  Percentage    = c(
+    percent(counts$TP / tot, accuracy = .1),
+    percent(counts$TN / tot, accuracy = .1),
+    percent(counts$FN / tot, accuracy = .1),
+    percent(counts$FP / tot, accuracy = .1),
+    "100%",
+    percent((counts$TP + counts$TN) / tot, accuracy = .1)
+  )
+)
+
+DT::datatable(
+  summary_tbl,
+  rownames   = FALSE,
+  options    = list(
+    dom       = "t",        # hide search box & pager for a 6-row table
+    ordering  = FALSE,
+    columnDefs = list(list(className = 'dt-center', targets = 1:2))
+  ),
+  caption    = "Confusion-matrix summary of GPT screening"
+)
+
+
+```
+
