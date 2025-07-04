@@ -74,9 +74,6 @@ You can:
 * Add a page for a new tool
 * Share your benchmark or walkthrough
 * Improve or translate existing guides
-
-Please check [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to get started.
-
 ---
 
 ## Contact
