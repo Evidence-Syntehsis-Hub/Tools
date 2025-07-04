@@ -27,15 +27,16 @@ Each tool has its own page :
 
 *Keyword Search and References*
 
-- **🔗 Open Alex vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Open_Alex.html)
-- **🔗 litsearchr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/litsearchr.html)
+- **🔗 litsearchr vignette (Generates Keywords)**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/litsearchr.html)
+- **🔗 Open Alex vignette (Getting Open Source Papers)**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Open_Alex.html)
+
 
 
 *Screening*
 
-- **🔗 Abstrackr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Abstrackr.html)
-- **🔗 Colandr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Colandr.html)
-- **🔗 AIscreenR vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/AIscreenR.html)
+- **🔗 Abstrackr vignette (Manual Screening Web Page)**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Abstrackr.html)
+- **🔗 Colandr vignette (Manual Screening Web Page)**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Colandr.html)
+- **🔗 AIscreenR vignette (Screen with AI)**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/AIscreenR.html)
 
 *Tagging*
 
