@@ -90,7 +90,7 @@ Please check [`CONTRIBUTING.md`](CONTRIBUTING.md) for how to get started.
 ## Citation
 
 ```
-Lolita M., Todd R., Natalia S., Andrea R., Sarah G. et al. (2025).  
+Lolita M., Todd R., Natalia E.C, Andrea S., Sarah J. et al. (2025).  
 Evidence Synthesis Hub: A guide to using and comparing tools for systematic evidence synthesis.  
 GitHub. https://github.com/<org>/evidence-synthesis-hub
 ```
