@@ -35,6 +35,7 @@ Each tool has its own page :
 
 - **🔗 Abstrackr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Abstrackr.html)
 - **🔗 Colandr vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/Colandr.html)
+- **🔗 AIscreenR vignette**: [View Report](https://Evidence-Synthesis-Hub.github.io/Tools/AIscreenR.html)
 
 *Tagging*
 
